@@ -1,5 +1,5 @@
 <?php
-include "navbar.php";
+include "contact-navbar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,27 +65,11 @@ include "navbar.php";
 <body>
     <div class="bg"></div>
 
-    <!-- Your website content goes here -->
+<?php 
+include "footer.php";
+?>
 
-    <footer>
-        <div>
-            <h3>Contact Information</h3>
-            <p><i class="fa-solid fa-envelope"></i> simplirentrps534@gmail.com</p>
-            <p><i class="fa-solid fa-phone"></i> 9867419155</p>
-        </div>
 
-        <div class="social-icons">
-            <h3>Follow Us</h3>
-            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-
-        <div>
-            <p><i class="fa-solid fa-location-dot"></i>
-                Golpark, Butwal, Lumbini</p>
-        </div>
-    </footer>
 
 </body>
 

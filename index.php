@@ -1,5 +1,14 @@
 <?php
+// session_start();
 include 'navbar.php';
+if (isset($_SESSION['email'])) {
+    global $uemail;
+    $uemail = $_SESSION['email'];
+}
+;
+
+
+require './config/config.php';
 ?>
 <!-- <!DOCTYPE html>
 <html lang="en">
@@ -19,92 +28,140 @@ include 'navbar.php';
         /* Choose a web-safe font */
         background-color: #f4f4f4;
         /* Set a light background color */
-        
+
     }
 
     .bg {
         /* the image used */
-        background-image: url("images/logo3.gif");
-        background-color: #ffc107;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/heroimagee.jpg");
+        /* background-color: #ffc107; */
         /* Use a warm background color */
 
         /* full height */
-        height: 80%;
+        /* height: 80%;
         width:100%
-        padding: 20px 30px;
+        padding: 20px 30px; */
 
 
         /* Center and scale the image nicely */
-        background-position: bottom;
+        /* background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover; */
+        /* display: flex; */
+        height: 75vh;
+        background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        /* display: flex; */
-       
+        position: relative;
+
     }
 
-
-    .form-control {
-        display: block;
-        width: 100%;
-        height: auto;
-        margin-right: 1000px;
-        padding: 10px 0;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
+    .hero-text {
         text-align: center;
-        background-color: black;
-        /* Use a vibrant color for the button */
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         color: white;
+        padding: 0 20px;
+        width: 100%;
     }
 
-    .form-control:hover {
-        background-color: white;
-        pointer-events: visiblePainted;
-        color: black;
-        border-style: visible;
-        border-color: green;
-        box-shadow: hotpink;
-        border-width: 3px;
-
-        /* Darken the color on hover */
+    .hero-text h1 {
+        font-size: 4vw;
+        margin-bottom: 0;
     }
+
+    .hero-text h2 {
+        font-size: 3.5vw;
+        margin: 0;
+    }
+
+    .hero-text h3 {
+        margin-top: 10px;
+        font-size: 3vw;
+        color: #5cb85c;
+    }
+
+
+
 
     .form-container {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 20px;
+        flex-wrap: wrap;
     }
 
     .form-container input[type=text],
     .form-container select {
-        border: 1px solid #007bff;
-        box-shadow: 0 0 0 1px #007bff;
+        border: 1px solid #5cb85c;
+        box-shadow: 0 0 0 1px #5cb85c;
         border-radius: 5px;
         padding: 10px;
         width: 250px;
-        margin-right: 10px;
+        margin: 10px;
     }
 
     .form-container button {
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
-        background-color: #007bff;
+        background-color: #5cb85c;
         color: white;
         cursor: pointer;
+        width: 100px;
+        margin: 10px;
+        transition: transform 0.3s ease;
     }
 
     .form-container button:hover {
-        background-color: #0056b3;
+        background-color: #4cae4c;
+        transform: scale(1.10);
     }
+
+    @media (max-width: 768px) {
+        .bg {
+            /* the image used */
+          height: 50vh;
+
+        }
+
+        .hero-text h1 {
+            font-size: 6vw;
+        }
+
+        .hero-text h2 {
+            font-size: 5.5vw;
+        }
+
+        .hero-text h3 {
+         font-size: 5vw;
+    }
+    .form-container {
+        flex-direction: column;
+    }
+
+    .form-container input[type=text],
+    .form-container select,
+    .form-container button {
+        width: 80%;
+    }
+}
 </style>
 
 <!-- </head> -->
 
 <!-- <body> -->
-<div class="bg"></div> <br>
+<div class="bg">
+    <div class="hero-text">
+        <h1>FIND PERFECT ROOMS </h1>
+        <h2>FOR LIVING With</h2>
+        <h3>RoomSewa</h3>
+    </div>
+
+</div> <br>
 <div class="container active-cyan-4 mb-4 inline">
     <div class="form-container">
         <form method="POST" action="search-property.php">
@@ -114,7 +171,6 @@ include 'navbar.php';
                 <option value="">Property Type</option>
                 <option value="roomrent">Room Rent</option>
                 <option value="flatrent">Flat Rent</option>
-                <option value="officespacerent">Office Space</option>
             </select>
             <select name="price_range">
                 <option value="">Price Range</option>
@@ -128,7 +184,12 @@ include 'navbar.php';
     </div>
 </div>
 
+
 <?php
+
+include("./property-list.php");
+
+
 include 'footer.php';
 ?>
 

@@ -52,16 +52,16 @@ include("navbar.php");
             text-decoration: none;
             cursor: pointer;
             color: #fff;
-            background-color: #17a2b8;
-            border: 1px solid #17a2b8;
+            background-color:  #5cb85c;
+            border: 1px solid  #5cb85c;
             border-radius: 5px;
             margin-right: 10px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #138496;
-            border-color: #138496;
+            background-color: #4cae4c;
+            transform: scale(1.05);
         }
     </style>
 </head>

@@ -1,9 +1,9 @@
 <?php
-session_start();
+// session_start();
+include  './navbar.php';
 if (isset($_SESSION['email'])) {
     $uemail = $_SESSION['email'];
     // echo $uemail;
-    include  './navbar.php';
 }
 ?>
 <!DOCTYPE html>

@@ -1,16 +1,15 @@
-<?php
-include 'config/config.php';
+<?php 
+include("config/config.php");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Property Listings</title>
+  <title>Property Listing</title>
   <style>
-    .container {
+  .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
@@ -128,11 +127,10 @@ include 'config/config.php';
     }
   </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <?php
+<div class="container">
+  <?php 
     $sql = "SELECT * FROM add_property order by rand() limit 18";
     $query = mysqli_query($db, $sql);
 
@@ -143,36 +141,35 @@ include 'config/config.php';
         $query2 = mysqli_query($db, $sql2);
 
         if (mysqli_num_rows($query2) > 0) {
-          $row = mysqli_fetch_assoc($query2);
+          $row = mysqli_fetch_assoc($query2); 
           $photo = $row['p_photo'];
-          $bookedFlag = $rows['booked'];
+          $bookedFlag= $rows['booked'];
         }
-        ?>
+  ?>
 
-        <div class="card">
-          <?php if (isset($photo)) { ?>
-            <img class="image" src="owner/<?php echo $photo; ?>" alt="Property Image">
-          <?php } ?>
-          <div class="label">
-            <?php if ($bookedFlag == 'No') { ?>
-              <span class="label available">Available</span>
-            <?php } elseif ($bookedFlag == 'Yes') { ?>
-              <span class="label booked"> Booked</span>
-            <?php } ?>
-          </div>
-          <div class="property-info">
-            <h4><b><?php echo $rows['property_type']; ?></b></h4>
-            <p><?php echo $rows['city'] . ', ' . $rows['district']; ?></p>
-            <a href="view-property.php?property_id=<?php echo $rows['property_id']; ?>" class="btn">View Property</a>
-          </div>
-        </div>
-
-      <?php
-      }
-    }
-    ?>
+  <div class="card">
+    <?php if (isset($photo)) { ?>
+      <img class="image" src="owner/<?php echo $photo; ?>" alt="Property Image">
+    <?php } ?>
+    <div class="label">
+              <?php if ($bookedFlag == 'No') { ?>
+                <span class="label available">Available</span>
+              <?php } elseif ($bookedFlag == 'Yes') { ?>
+                <span class="label booked" > Booked</span>
+              <?php } ?>
+            </div>
+    <div class="property-info">
+      <h4><b><?php echo $rows['property_type']; ?></b></h4>
+      <p><?php echo $rows['city'].', '.$rows['district']; ?></p>
+      <a href="view-property.php?property_id=<?php echo $rows['property_id']; ?>" class="btn">View Property</a>
+    </div>
   </div>
 
-</body>
+  <?php 
+      }
+    }
+  ?>
+</div>
 
+</body>
 </html>

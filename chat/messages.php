@@ -1,19 +1,20 @@
 <?php
-session_start();
-include '../navbar.php';
+// session_start();
+
+
+include './navbar.php';
 include '../config/config.php';
-$usemail=$_SESSION['email'];
 ?>
 <h2>Choose To Reply</h2>
 <?php
-//echo $usemail;
-global $sender_id,$receiver_name;
+// echo $usemail;
+global $sender_id,$receiver_name,$usemail;
 $sql="SELECT * from tenant where email='$usemail';";
 $result= mysqli_query($db,$sql);
 if($result){
     $row=mysqli_fetch_assoc($result);
-    $sender_id=$row['tenant_id'];
-    //echo $sender_id;
+    // $sender_id=$row['tenant_id'];
+    echo $sender_id;
 }
 $sql1="SELECT DISTINCT sender_id from messages where receiver_id='$sender_id';";
 $result1=mysqli_query($db,$sql1);

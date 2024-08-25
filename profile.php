@@ -1,5 +1,5 @@
 <?php
-  // session_start();
+  session_start();
   include('navbar.php');
   if (!isset($_SESSION["email"])) {
     header("location:index.php");
@@ -109,7 +109,7 @@ include('tenant-engine.php');
                   </div>
                   <div class="form-group">
                     <label>Your Id:</label><br>
-                    <img src="<?php echo $rows['id_photo']; ?>" id="output_image" / height="100px" readonly>
+                    <img src="<?php echo $rows['id_photo']; ?>" id="output_image"  height="100px" readonly>
                   </div>
                   <hr>
                   <center><button id="submit" name="tenant_update" class="btn btn-primary btn-block">Update</button>

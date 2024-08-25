@@ -35,10 +35,11 @@ session_start();
       color: white;
 
     }
-    .design{
+
+    .design {
       font-size: 40px;
-      font-weight:bold;
-      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+      font-weight: bold;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       color: black;
 
     }
@@ -54,8 +55,9 @@ session_start();
   include('config/config.php');
   include('navbar.php');
   include('review-engine.php');
-//   include('booking-engine.php');
 
+  //include('booking-engine.php');
+  
   ?>
 
 
@@ -77,7 +79,7 @@ session_start();
       $query2 = mysqli_query($db, $sql2);
 
       $rowcount = mysqli_num_rows($query2);
-  ?>
+      ?>
 
 
 
@@ -92,22 +94,24 @@ session_start();
                 for ($i = 1; $i <= $rowcount; $i++) {
                   $row = mysqli_fetch_array($query2);
                   $photo = $row['p_photo'];
-                ?>
+                  ?>
 
                   <?php
                   if ($i == 1) {
-                  ?>
+                    ?>
                     <div class="item active">
-                      <img class="d-block img-fluid" src="owner/<?php echo $photo ?>" alt="First slide" width="100%" style="max-height: 600px; min-height: 600px;">
+                      <img class="d-block img-fluid" src="owner/<?php echo $photo ?>" alt="First slide" width="100%"
+                        style="max-height: 600px; min-height: 600px;">
                     </div>
-                  <?php
+                    <?php
                   } else {
-                  ?>
+                    ?>
                     <div class="item">
-                      <img class="d-block img-fluid" src="owner/<?php echo $photo ?>" alt="First slide" width="100%" style="max-height: 600px; min-height: 600px;">
+                      <img class="d-block img-fluid" src="owner/<?php echo $photo ?>" alt="First slide" width="100%"
+                        style="max-height: 600px; min-height: 600px;">
                     </div>
 
-                <?php
+                    <?php
                   }
                 }
                 ?>
@@ -136,7 +140,7 @@ session_start();
 
                 <div class="row">
                   <div class="col-sm-6">
-                  <table>
+                    <table>
                       <tr>
                         <td>
                           <h4 class="simple">Country:</h4>
@@ -326,17 +330,17 @@ session_start();
         <?php
 
         if (isset($_SESSION["email"]) && !empty($_SESSION['email'])) {
-          $u_email=$_SESSION['email'];
-            $sql01="SELECT tenant_id from tenant where email='$u_email';";
-            $result01=mysqli_query($db,$sql01);
-            if($result01){
-              $row01=mysqli_fetch_assoc($result01);
-              $tenant_id=$row01['tenant_id'];
-              echo($tenant_id);
-            }
+          $u_email = $_SESSION['email'];
+          $sql01 = "SELECT tenant_id from tenant where email='$u_email';";
+          $result01 = mysqli_query($db, $sql01);
+          if ($result01) {
+            $row01 = mysqli_fetch_assoc($result01);
+            $tenant_id = $row01['tenant_id'];
+            echo ($tenant_id);
+          }
 
-        ?>
-          <form method="POST" action="./payment/index.php">
+          ?>
+          <form method="POST" action="">
             <div class="row">
               <div class="col-sm-6">
                 <?php
@@ -345,135 +349,142 @@ session_start();
                 if ($booked == 'No') { ?>
                   <input type="hidden" name="property_id" value="<?php echo $rows['property_id']; ?>">
 
-                  <input type="submit" class="btn btn-lg btn-primary" name="book_property" style="width: 100%" value="Book Property">
+                  <input type="submit" class="btn btn-lg btn-primary" name="book_property" style="width: 100%"
+                    value="Book Property">
                 <?php } else { ?>
                   <input type="submit" class="btn btn-lg btn-primary" style="width: 100%" value="Property Booked" disabled>
                 <?php } ?>
               </div>
           </form>
+
+
           <form method="POST" action="./chat/index.php">
             <div class="col-sm-6">
 
               <input type="hidden" name="sender_id" value="<?php echo $tenant_id; ?>">
-              <input type="hidden" name="receiver_id" value="<?php echo $rows['owner_id'];?>">
-              <input type="submit" class="btn btn-lg btn-success" name="send_message" style="width: 100%" value="Send Message">
+              <input type="hidden" name="receiver_id" value="<?php echo $rows['owner_id']; ?>">
+              <input type="submit" class="btn btn-lg btn-success" name="send_message" style="width: 100%"
+                value="Send Message">
 
             </div>
           </form>
-      </div>
+        </div>
 
-    <?php } else {
+      <?php } else {
           echo "<center><h3>You should login to book property.</h3></center>";
         }
 
 
-    ?>
+        ?>
 
-    <br>
-    <div id="map">
-      <?php
-      include("./maps.php");
-      ?>
-    </div>
+      <br>
+      <div id="map">
+        <?php
+        include("./maps.php");
+        ?>
+      </div>
 
-    <br>
+      <br>
 
 
-<?php }
+    <?php }
   } ?>
-</div>
-<div id="recommendedProperty">
-  <!-- Existing properties go here -->
-</div>
-<div class="recommendation-loadmore">
-
-
-  <div class="myclass">
-    <form action="./load-more.php" method="post">
-      <button type="submit" class="btn btn-outline-dark" name="load more" style="width: 300px" background-color="blue">Load More</button>
-    </form>
   </div>
-  <?php if (isset($_SESSION["email"]) && !empty($_SESSION["email"])) { ?>
+  <div id="recommendedProperty">
+    <!-- Existing properties go here -->
+  </div>
+  <div class="recommendation-loadmore">
 
 
     <div class="myclass">
-      <form id="recommendPropertyForm" action="./recommendation.php" method="post">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <input type="hidden" name="property_id" value="<?php echo $property_id; ?>">
-        <button type="submit" class="btn btn-outline-dark" name="recommended" style="width: 300px">Recommended</button>
+      <form action="./load-more.php" method="post">
+        <button type="submit" class="btn btn-outline-dark" name="load more" style="width: 300px"
+          background-color="blue">Load More</button>
       </form>
     </div>
-  <?php } ?>
-</div>
+    <?php if (isset($_SESSION["email"]) && !empty($_SESSION["email"])) { ?>
 
 
-<div class="container-fluid">
-  <h2>Review Property:</h2>
-  <div class="well well-sm">
-    <div class="text-right">
-      <?php
-
-      if (isset($_SESSION["email"]) && !empty($_SESSION['email'])) {
-      ?>
-        <a class="btn btn-success btn-info" href="#reviews-anchor" style="width: 100%" id="open-review-box">Leave a
-          Review</a>
-    </div>
-
-    <div class="row" id="post-review-box" style="display:none;">
-      <div class="col-md-12">
-        <form accept-charset="UTF-8" method="POST">
-          <input name="property_id" type="hidden" value="<?php echo $property_id; ?>">
-          <input id="ratings-hidden" name="rating" type="hidden">
-          <input name="tenant_id" type="hidden" value="<?php echo $tenant_id; ?>">
-          <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
-
-          <div class="text-right">
-            <div class="stars starrr" data-rating="0"></div>
-            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-              <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-            <button class="btn btn-success btn-lg" type="submit" name="review">Save</button>
-          </div>
+      <div class="myclass">
+        <form id="recommendPropertyForm" action="./recommendation.php" method="post">
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <input type="hidden" name="property_id" value="<?php echo $property_id; ?>">
+          <button type="submit" class="btn btn-outline-dark" name="recommended" style="width: 300px">Recommended</button>
         </form>
       </div>
-    </div>
-  <?php } else {
-        echo "<center>You should login to review property.</center>";
-      }
-  ?>
+    <?php } ?>
+  </div>
 
+
+  <div class="container-fluid">
+    <h2>Review Property:</h2>
+    <div class="well well-sm">
+      <div class="text-right">
+        <?php
+
+        if (isset($_SESSION["email"]) && !empty($_SESSION['email'])) {
+          ?>
+          <a class="btn btn-success btn-info" href="#reviews-anchor" style="width: 100%" id="open-review-box">Leave a
+            Review</a>
+        </div>
+
+        <div class="row" id="post-review-box" style="display:none;">
+          <div class="col-md-12">
+            <form accept-charset="UTF-8" method="POST">
+              <input name="property_id" type="hidden" value="<?php echo $property_id; ?>">
+              <input id="ratings-hidden" name="rating" type="hidden">
+              <input name="tenant_id" type="hidden" value="<?php echo $tenant_id; ?>">
+              <textarea class="form-control animated" cols="50" id="new-review" name="comment"
+                placeholder="Enter your review here..." rows="5"></textarea>
+
+              <div class="text-right">
+                <div class="stars starrr" data-rating="0"></div>
+                <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                  <span class="glyphicon glyphicon-remove"></span>Cancel</a>
+                <button class="btn btn-success btn-lg" type="submit" name="review">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <?php } else {
+          echo "<center>You should login to review property.</center>";
+        }
+        ?>
+
+
+    </div>
 
   </div>
 
-</div>
+
+  <?php
+
+  $sql1 = "SELECT * from review where property_id='$property_id'";
+  $query = mysqli_query($db, $sql1);
+  echo '<div class="container-fluid">';
+  echo '<h3>Reviews:</h3>';
+  echo '</div>';
+  if (mysqli_num_rows($query) > 0) {
+    while ($row = mysqli_fetch_assoc($query)) {
+      ?>
+      <div class="container-fluid">
+        <ul>
+          <li>
+            <?php echo $row['comment']; ?> &nbsp;&nbsp;&nbsp;(<span class="glyphicon glyphicon-star-empty"
+              style="size: 50px;">
+              <?php echo $row['rating']; ?>
+            </span>)
+          </li>
+        </ul>
+      </div>
 
 
-<?php
-
-$sql1 = "SELECT * from review where property_id='$property_id'";
-$query = mysqli_query($db, $sql1);
-echo '<div class="container-fluid">';
-echo '<h3>Reviews:</h3>';
-echo '</div>';
-if (mysqli_num_rows($query) > 0) {
-  while ($row = mysqli_fetch_assoc($query)) {
-?>
-    <div class="container-fluid">
-      <ul>
-        <li>
-          <?php echo $row['comment']; ?> &nbsp;&nbsp;&nbsp;(<span class="glyphicon glyphicon-star-empty" style="size: 50px;">
-            <?php echo $row['rating']; ?>
-          </span>)
-        </li>
-      </ul>
-    </div>
-
-
-<?php
+      <?php
+    }
   }
-}
-?>
-<br><br>
+  ?>
+  <br><br>
 
 
 
@@ -488,22 +499,23 @@ if (mysqli_num_rows($query) > 0) {
 
 
 <style>
-  .simple{
+  .simple {
     font-size: 2.25rem;
     color: black;
-    font-family: sans-serif ;
+    font-family: sans-serif;
   }
 
   h4 {
     font-size: 20px;
   }
-  .notification{
+
+  .notification {
     font-size: 2.5rem;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color:rgba(255, 20, 25 , 1);
+    background-color: rgba(255, 20, 25, 1);
     color: white;
     border-radius: 10px;
-    text-transform:capitalize  ;
+    text-transform: capitalize;
   }
 
   table {
@@ -534,30 +546,30 @@ if (mysqli_num_rows($query) > 0) {
 </style>
 
 <script>
-  (function(e) {
+  (function (e) {
     var t, o = {
-        className: "autosizejs",
-        append: "",
-        callback: !1,
-        resizeDelay: 10
-      },
+      className: "autosizejs",
+      append: "",
+      callback: !1,
+      resizeDelay: 10
+    },
       i = '<textarea tabindex="-1" style="position:absolute; top:-999px; left:0; right:auto; bottom:auto; border:0; padding: 0; -moz-box-sizing:content-box; -webkit-box-sizing:content-box; box-sizing:content-box; word-wrap:break-word; height:0 !important; min-height:0 !important; overflow:hidden; transition:none; -webkit-transition:none; -moz-transition:none;"/>',
       n = ["fontFamily", "fontSize", "fontWeight", "fontStyle", "letterSpacing", "textTransform", "wordSpacing", "textIndent"],
       s = e(i).data("autosize", !0)[0];
-    s.style.lineHeight = "99px", "99px" === e(s).css("lineHeight") && n.push("lineHeight"), s.style.lineHeight = "", e.fn.autosize = function(i) {
-      return this.length ? (i = e.extend({}, o, i || {}), s.parentNode !== document.body && e(document.body).append(s), this.each(function() {
+    s.style.lineHeight = "99px", "99px" === e(s).css("lineHeight") && n.push("lineHeight"), s.style.lineHeight = "", e.fn.autosize = function (i) {
+      return this.length ? (i = e.extend({}, o, i || {}), s.parentNode !== document.body && e(document.body).append(s), this.each(function () {
         function o() {
           var t, o;
-          "getComputedStyle" in window ? (t = window.getComputedStyle(u, null), o = u.getBoundingClientRect().width, e.each(["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"], function(e, i) {
+          "getComputedStyle" in window ? (t = window.getComputedStyle(u, null), o = u.getBoundingClientRect().width, e.each(["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"], function (e, i) {
             o -= parseInt(t[i], 10)
           }), s.style.width = o + "px") : s.style.width = Math.max(p.width(), 0) + "px"
         }
 
         function a() {
           var a = {};
-          if (t = u, s.className = i.className, d = parseInt(p.css("maxHeight"), 10), e.each(n, function(e, t) {
-              a[t] = p.css(t)
-            }), e(s).css(a), o(), window.chrome) {
+          if (t = u, s.className = i.className, d = parseInt(p.css("maxHeight"), 10), e.each(n, function (e, t) {
+            a[t] = p.css(t)
+          }), e(s).css(a), o(), window.chrome) {
             var r = u.style.width;
             u.style.width = "0px", u.offsetWidth, u.style.width = r
           }
@@ -569,7 +581,7 @@ if (mysqli_num_rows($query) > 0) {
         }
 
         function l() {
-          clearTimeout(h), h = setTimeout(function() {
+          clearTimeout(h), h = setTimeout(function () {
             var e = p.width();
             e !== g && (g = e, r())
           }, parseInt(i.resizeDelay, 10))
@@ -591,11 +603,11 @@ if (mysqli_num_rows($query) > 0) {
           overflowY: "hidden",
           wordWrap: "break-word",
           resize: "none" === p.css("resize") || "vertical" === p.css("resize") ? "none" : "horizontal"
-        }), "onpropertychange" in u ? "oninput" in u ? p.on("input.autosize keyup.autosize", r) : p.on("propertychange.autosize", function() {
+        }), "onpropertychange" in u ? "oninput" in u ? p.on("input.autosize keyup.autosize", r) : p.on("propertychange.autosize", function () {
           "value" === event.propertyName && r()
-        }) : p.on("input.autosize", r), i.resizeDelay !== !1 && e(window).on("resize.autosize", l), p.on("autosize.resize", r), p.on("autosize.resizeIncludeStyle", function() {
+        }) : p.on("input.autosize", r), i.resizeDelay !== !1 && e(window).on("resize.autosize", l), p.on("autosize.resize", r), p.on("autosize.resizeIncludeStyle", function () {
           t = null, r()
-        }), p.on("autosize.destroy", function() {
+        }), p.on("autosize.destroy", function () {
           t = null, clearTimeout(h), e(window).off("resize", l), p.off("autosize").off(".autosize").css(z).removeData("autosize")
         }), r())
       })) : this
@@ -603,9 +615,9 @@ if (mysqli_num_rows($query) > 0) {
   })(window.jQuery || window.$);
 
   var __slice = [].slice;
-  (function(e, t) {
+  (function (e, t) {
     var n;
-    n = function() {
+    n = function () {
       function t(t, n) {
         var r, i, s, o = this;
         this.options = e.extend({}, this.defaults, n);
@@ -619,13 +631,13 @@ if (mysqli_num_rows($query) > 0) {
         }
         this.createStars();
         this.syncRating();
-        this.$el.on("mouseover.starrr", "span", function(e) {
+        this.$el.on("mouseover.starrr", "span", function (e) {
           return o.syncRating(o.$el.find("span").index(e.currentTarget) + 1)
         });
-        this.$el.on("mouseout.starrr", function() {
+        this.$el.on("mouseout.starrr", function () {
           return o.syncRating()
         });
-        this.$el.on("click.starrr", "span", function(e) {
+        this.$el.on("click.starrr", "span", function (e) {
           return o.setRating(o.$el.find("span").index(e.currentTarget) + 1)
         });
         this.$el.on("starrr:change", this.options.change)
@@ -633,9 +645,9 @@ if (mysqli_num_rows($query) > 0) {
       t.prototype.defaults = {
         rating: void 0,
         numStars: 5,
-        change: function(e, t) {}
+        change: function (e, t) { }
       };
-      t.prototype.createStars = function() {
+      t.prototype.createStars = function () {
         var e, t, n;
         n = [];
         for (e = 1, t = this.options.numStars; 1 <= t ? e <= t : e >= t; 1 <= t ? e++ : e--) {
@@ -643,7 +655,7 @@ if (mysqli_num_rows($query) > 0) {
         }
         return n
       };
-      t.prototype.setRating = function(e) {
+      t.prototype.setRating = function (e) {
         if (this.options.rating === e) {
           e = void 0
         }
@@ -651,7 +663,7 @@ if (mysqli_num_rows($query) > 0) {
         this.syncRating();
         return this.$el.trigger("starrr:change", e)
       };
-      t.prototype.syncRating = function(e) {
+      t.prototype.syncRating = function (e) {
         var t, n, r, i;
         e || (e = this.options.rating);
         if (e) {
@@ -671,10 +683,10 @@ if (mysqli_num_rows($query) > 0) {
       return t
     }();
     return e.fn.extend({
-      starrr: function() {
+      starrr: function () {
         var t, r;
         r = arguments[0], t = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-        return this.each(function() {
+        return this.each(function () {
           var i;
           i = e(this).data("star-rating");
           if (!i) {
@@ -687,11 +699,11 @@ if (mysqli_num_rows($query) > 0) {
       }
     })
   })(window.jQuery, window);
-  $(function() {
+  $(function () {
     return $(".starrr").starrr()
   })
 
-  $(function() {
+  $(function () {
 
     $('#new-review').autosize({
       append: "\n"
@@ -703,8 +715,8 @@ if (mysqli_num_rows($query) > 0) {
     var closeReviewBtn = $('#close-review-box');
     var ratingsField = $('#ratings-hidden');
 
-    openReviewBtn.click(function(e) {
-      reviewBox.slideDown(400, function() {
+    openReviewBtn.click(function (e) {
+      reviewBox.slideDown(400, function () {
         $('#new-review').trigger('autosize.resize');
         newReview.focus();
       });
@@ -712,9 +724,9 @@ if (mysqli_num_rows($query) > 0) {
       closeReviewBtn.show();
     });
 
-    closeReviewBtn.click(function(e) {
+    closeReviewBtn.click(function (e) {
       e.preventDefault();
-      reviewBox.slideUp(300, function() {
+      reviewBox.slideUp(300, function () {
         newReview.focus();
         openReviewBtn.fadeIn(200);
       });
@@ -722,13 +734,13 @@ if (mysqli_num_rows($query) > 0) {
 
     });
 
-    $('.starrr').on('starrr:change', function(e, value) {
+    $('.starrr').on('starrr:change', function (e, value) {
       ratingsField.val(value);
     });
   });
 </script>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Get the PHP variable value and use it in the AJAX call
     var property_id = '<?php echo $property_id; ?>';
 
@@ -740,11 +752,11 @@ if (mysqli_num_rows($query) > 0) {
         property_id: property_id
       },
       dataType: 'json',
-      success: function(data) {
+      success: function (data) {
         // Handle the response data as needed
         console.log(data);
       },
-      error: function(error) {
+      error: function (error) {
         // Handle errors
         console.error('There was a problem with the AJAX call:', error);
       }

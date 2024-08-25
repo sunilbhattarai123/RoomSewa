@@ -155,7 +155,7 @@ function owner_login()
                 die("Please verify your email <a href='email-verification-owner.php?email=" . $email . "'>from here</a>");
             }
             $_SESSION['email'] = $email;
-            echo '<script>window.location.href = "index.php";</script>';
+            echo '<script>window.location.href ="./owner/owner-index.php";</script>';
 
             
    

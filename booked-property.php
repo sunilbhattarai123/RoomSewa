@@ -92,7 +92,7 @@ $sql="SELECT * FROM add_property where property_id='$prop_id'";
 
   <h4><b><?php echo $rows['property_type']; ?></b></h4> 
   <p><?php echo $rows['city'].', '.$rows['district'] ?></p> 
-  <p><?php echo '<a href="view-property-login.php?property_id='.$rows['property_id'].'"  class="btn btn-lg btn-primary btn-block" >View Property </a><br>'; ?></p><br>
+  <p><?php echo '<a href="view-property.php?property_id='.$rows['property_id'].'"  class="btn btn-lg btn-primary btn-block" >View Property </a><br>'; ?></p><br>
 </div>
 </div>
 
@@ -106,7 +106,7 @@ $sql="SELECT * FROM add_property where property_id='$prop_id'";
     }
 
     else{
-    	// echo "<center><h3>Searched Property not found...</h3></center>";
+    	echo "<center><h3>Searched Property not found...</h3></center>";
     }
   }}}}
     ?>

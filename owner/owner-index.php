@@ -1,14 +1,15 @@
 <?php
-// session_start();
-include("navbar.php");
+session_start();
+include 'navbar.php';
+
 ?>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
+
 </head>
 
 <body>
@@ -21,7 +22,7 @@ include("navbar.php");
   <div class="container-fluid">
     <ul class="nav nav-pills nav-justified">
       <li class="active" style="background-color: #FFF8DC"><a data-toggle="pill" href="#home">Profile</a></li>
-      <li style="background-color: #FAC0E6"><a  href="../owner/chat/messages.php">Messages</a></li>
+      <li style="background-color: #FAC0E6"><a href="../owner/chat/messages.php">Messages</a></li>
       <li style="background-color: #FAF0E6"><a data-toggle="pill" href="#menu1">Add Property</a></li>
       <li style="background-color: #FFFACD"><a data-toggle="pill" href="#menu2">View Property</a></li>
       <!-- <li style="background-color: #FFFAF0"><a data-toggle="pill" href="#menu3">Update Property</a></li> -->
@@ -36,6 +37,7 @@ include("navbar.php");
         <div class="container">
           <?php
           include("../config/config.php");
+          global $u_email;
           $u_email = $_SESSION["email"];
 
           $sql = "SELECT * from owner where email='$u_email'";
@@ -46,7 +48,7 @@ include("navbar.php");
 
               ?>
               <div class="card">
-                <img src="../images/avatar.png" alt="John" style="height:200px; width: 100%">
+                <img src="../images/sunil.jpg" alt="John" style="height:200px; width: 100%">
                 <h1>
                   <?php echo $rows['full_name']; ?>
                 </h1>
@@ -537,19 +539,19 @@ include("navbar.php");
                           $photo = $row['p_photo'];
                           echo '<img class="image-a" src="' . $photo . '" alt="Property Image">';
                         } ?>
-                        
-                      <div class="xutai">
-                        <h4><b>
-                            <?php echo $rows['property_type']; ?>
-                          </b></h4>
-                        <p>
-                          <?php echo $rows['city'] . ', ' . $rows['district'] ?>
-                        </p>
-                        <p>
-                        </div>
-                        
 
-                          <?php echo '<a href="view-property.php?property_id=' . $rows['property_id'] . '" class="btn-a btn-lg btn-primary btn-block">View Property </a><br>'; ?>
+                        <div class="xutai">
+                          <h4><b>
+                              <?php echo $rows['property_type']; ?>
+                            </b></h4>
+                          <p>
+                            <?php echo $rows['city'] . ', ' . $rows['district'] ?>
+                          </p>
+                          <p>
+                        </div>
+
+
+                        <?php echo '<a href="view-property.php?property_id=' . $rows['property_id'] . '" class="btn-a btn-lg btn-primary btn-block">View Property </a><br>'; ?>
                         </p>
                       </div>
                     </div>
@@ -1010,9 +1012,10 @@ include("navbar.php");
             </tr>
 
             <?php
+          
             include("../config/config.php");
+            global $owner_id;
             $u_email = $_SESSION["email"];
-
             $sql3 = "SELECT owner_id from owner where email='$u_email'";
             $result3 = mysqli_query($db, $sql3);
 
@@ -1023,17 +1026,19 @@ include("navbar.php");
                 $result2 = mysqli_query($db, $sql2);
 
                 if (mysqli_num_rows($result2) > 0) {
-                  while ($ro = mysqli_fetch_assoc($result2)) {
-                    $property_id = $ro['property_id'];
-                    $tenant_id = $ro['tenant_id'];
+                  while ($rowsss = mysqli_fetch_assoc($result2)) {
+                    $property_id = $rowsss['property_id'];
+                    $tenant_id = $rowsss['tenant_id'];
                     $myquery = "SELECT full_name, address from tenant where tenant_id='$tenant_id'";
                     $myqueryresult = mysqli_query($db, $myquery);
                     if ($myqueryresult) {
                       $resRow = mysqli_fetch_assoc($myqueryresult);
-                      if($resRow!==null){
-                      $fullname = $resRow['full_name'];
-                      $address = $resRow['address'];}
-                      else{ continue;}
+                      if ($resRow !== null) {
+                        $fullname = $resRow['full_name'];
+                        $address = $resRow['address'];
+                      } else {
+                        continue;
+                      }
 
                       $sql = "SELECT province, district, zone, ward_no, tole from add_property where property_id='$property_id'";
                       $result = mysqli_query($db, $sql);
@@ -1081,6 +1086,7 @@ include("navbar.php");
     </div>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+
 
 </body>
 
@@ -1251,4 +1257,5 @@ include("navbar.php");
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
 </script>

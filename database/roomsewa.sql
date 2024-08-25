@@ -1431,7 +1431,8 @@ INSERT INTO `admin` (`admin_id`, `email`, `password`) VALUES
 CREATE TABLE `booking` (
   `booking_id` int(10) NOT NULL,
   `property_id` int(10) NOT NULL,
-  `tenant_id` int(10) NOT NULL
+  `tenant_id` int(10) NOT NULL,
+  'owner_id' int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

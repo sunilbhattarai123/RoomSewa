@@ -1,5 +1,6 @@
 <?php
-include "contact-navbar.php";
+session_start();
+include "navbar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

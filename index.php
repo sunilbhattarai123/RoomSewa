@@ -1,13 +1,10 @@
 <?php
-// session_start();
+session_start();
 include 'navbar.php';
 if (isset($_SESSION['email'])) {
     global $uemail;
     $uemail = $_SESSION['email'];
-}
-;
-
-
+};
 require './config/config.php';
 ?>
 <!-- <!DOCTYPE html>
@@ -90,7 +87,7 @@ require './config/config.php';
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 20px;
+        margin-top: -25px;
         flex-wrap: wrap;
     }
 
@@ -186,10 +183,17 @@ require './config/config.php';
 
 
 <?php
+// if (isset($_SESSION['email'])) {
+//     include 'property-list-login.php';
+    
+//    }
+//    else{
+       include 'property-list.php';
+    //  }
+     ?>
 
-include("./property-list.php");
-
-
+<br>
+<?php
 include 'footer.php';
 ?>
 

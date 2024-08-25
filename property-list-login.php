@@ -1,13 +1,13 @@
+
+
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-// session_start();
+session_start();
 if (isset($_SESSION['email'])) {
   global $uemail;
   $uemail = $_SESSION['email'];
   // echo $uemail;
 }
-include 'config/config.php';}
+include("config/config.php");
 ?>
 
 <!DOCTYPE html>
@@ -18,16 +18,7 @@ include 'config/config.php';}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Property Listing</title>
   <style>
-    /* body {
-      font-family: Arial, sans-serif;
-     
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      background-color: lightgray;
-    } */
-
-    .container {
+.container {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
@@ -36,7 +27,6 @@ include 'config/config.php';}
     }
 
     .card {
-      position: relative;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
       width: 300px;
       margin: 35px;
@@ -44,24 +34,32 @@ include 'config/config.php';}
       overflow: hidden;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
       border-radius: 10px;
-      border-width: 10px;
-      border-color: green;
+      border: 2px solid green;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
     }
 
     .card:hover {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-      opacity: 0.8;
+      opacity: 0.9;
       transform: scale(1.1);
     }
 
     .image {
       width: 100%;
-      height: 200px;
+      height: 250px;
       object-fit: cover;
+      border-bottom: 2px solid green;
     }
 
     .property-info {
       padding: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .btn {
@@ -71,7 +69,7 @@ include 'config/config.php';}
       background-color: green;
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 0 0 10px 10px;
       transition: background-color 0.3s ease;
     }
 
@@ -80,13 +78,13 @@ include 'config/config.php';}
       color: blueviolet;
     }
 
-    /* Add this CSS to your existing styles */
     .label {
-      display: inline;
-      padding: 15px;
-      border-radius: 5px;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 15px;
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1rem;
+      margin-bottom: 10px;
     }
 
     .available {
@@ -98,6 +96,45 @@ include 'config/config.php';}
       background-color: red;
       color: white;
     }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .card {
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      .image {
+        height: 150px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .card {
+        margin: 15px 0;
+        border-width: 5px;
+      }
+
+      .image {
+        height: 120px;
+      }
+
+      .label {
+        font-size: 1.2rem;
+        padding: 10px;
+      }
+
+      .btn {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+    }
+
   </style>
 </head>
 

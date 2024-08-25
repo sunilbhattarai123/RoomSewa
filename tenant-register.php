@@ -16,7 +16,8 @@ include 'navbar.php';
     <div class="container">
         <h3 style="font-weight: bold; text-align: center;">Tenant Register</h3>
         <hr><br>
-        <form method="POST" action="tenant-engine.php" enctype="multipart/form-data">
+        <form method="POST" action="tenant-engine.php" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+            enctype="multipart/form-data">
             <input type="hidden" id="location" name="location" value="">
 
 
@@ -90,9 +91,12 @@ include 'navbar.php';
                 <label for="card_photo">Upload your Selected Card:</label>
                 <input type="file" class="form-control" placeholder="Upload id photo" name="id_photo" accept="image/*"
                     onchange="preview_image(event)" required>
+                <?php if (isset($errors['id_photo'])): ?>
+                    <div style="color: red;"><?php echo $errors['id_photo']; ?></div>
+                <?php endif; ?>
             </div>
 
-            
+
             <div class="form-group">
                 <label>Your selected File:</label><br>
                 <img src="" id="output_image" alt="Selected File" height="100px" required>
@@ -109,7 +113,7 @@ include 'navbar.php';
     <!-- Font Awesome CDN link -->
     <script href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <script src="./script/register.js"></script>
-     
+
 
 </body>
 

@@ -10,8 +10,8 @@ if (isset($_POST['review'])) {
 
 function review()
 {
-  global $db;
-  $review_id = $_POST['review_id'];
+  global $db,$review_id;
+  // $review_id = $_POST['review_id'];
   $comment = $_POST['comment'];
   $rating = $_POST['rating'];
   $property_id = $_POST['property_id'];

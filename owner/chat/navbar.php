@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SimplirentRps</title>
+  <title>RoomSewa</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../style/navbar.css" class="css">
  
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar-light justify-content-between" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-sm navbar-light justify-content-between">
   <div class="container-fluid">
   <a class="navbar-header" href="../owner-index.php">
-    <img src="./logo.png" alt="logo" style="height:50px;">
+    <img src="../../images/mainlogo.png" alt="logo" style="height:70px; width:70px;">
   </a>
   
   <!-- Links -->
   <ul class="nav navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="../owner-index.php">Home</a>
+      <a class="nav-link" href="./index.php">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">About Us</a>
+      <a class="nav-link" href="../aboutus.php">About Us</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Contact Us</a>
+      <a class="nav-link" href="../contactus.php">Contact Us</a>
     </li>
   </ul>
   <ul class="nav navbar-nav navbar-right">
     <?php 
 if(isset($_SESSION["email"]) && !empty($_SESSION['email'])){
-  echo '<li><a href="../../logout.php">Logout</a></li>';
+  echo '<li><a href="../logout.php">Logout</a></li>';
 }
 
 else {?>

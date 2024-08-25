@@ -38,117 +38,67 @@ if (isset($_POST['tenant_update'])) {
 
 function tenant_register()
 {
+   // Array to store error messages
+  $errors=[];
+
   if (isset($_FILES['id_photo'])) {
-    $id_photo = 'tenant-photo/'.microtime() . $_FILES['id_photo']['name'];
 
-    // echo $_FILES['image']['name'].'<br>';
+    // Define allowed file types and maximum size (5MB)
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+    $max_size = 5 * 1024 * 1024; // 5MB in bytes
 
-    if (!empty($_FILES['id_photo'])) {
-      $path = "tenant-photo/";
-      $path = $path . basename($_FILES['id_photo']['name']);
-      if (move_uploaded_file($_FILES['id_photo']['tmp_name'], $path)) {
-        echo "The file " . basename($_FILES['id_photo']['name']) . " has been uploaded";
-      } else {
-        echo "There was an error uploading the file, please try again!";
-      }
+    // Get file properties
+    $file_type = mime_content_type($_FILES['id_photo']['tmp_name']);
+    $file_size = $_FILES['id_photo']['size'];
+
+    // Check if the file type is allowed
+    if (!in_array($file_type, $allowed_types)) {
+      $errors['id_photo'] =  "Invalid file type. Only JPG, JPEG, PNG, and GIF formats are allowed.";
     }
-  }
-  
-// tenant-engine.php
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $errors = [];
-
-    // Validate Full Name
-    $full_name = trim($_POST['full_name']);
-    if (empty($full_name)) {
-        $errors['full_name'] = "Full Name is required.";
-    } elseif (!preg_match("/^[a-zA-Z ]+$/", $full_name)) {
-        $errors['full_name'] = "Full Name can only contain letters and spaces.";
+    // Check if the file size exceeds the maximum size
+    elseif ($file_size > $max_size) {
+      $errors['id_photo'] = "File size exceeds the 5MB limit.";
     }
+    // If file is valid, proceed with the upload
+    else {
+        $id_photo = 'tenant-photo/' . microtime() . $_FILES['id_photo']['name'];
+        $path = "tenant-photo/";
+        $path = $path . basename($_FILES['id_photo']['name']);
 
-    // Validate Email
-    $email = trim($_POST['email']);
-    if (empty($email)) {
-        $errors['email'] = "Email is required.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = "Invalid email format.";
-    }
-
-    // Validate Password
-    $password = $_POST['password'];
-    $password2 = $_POST['password2'];
-    if (empty($password)) {
-        $errors['password'] = "Password is required.";
-    } elseif (strlen($password) < 8) {
-        $errors['password'] = "Password must be at least 8 characters long.";
-    } elseif ($password !== $password2) {
-        $errors['password2'] = "Passwords do not match.";
-    }
-
-    // Validate Phone Number
-    $phone_no = trim($_POST['phone_no']);
-    if (empty($phone_no)) {
-        $errors['phone_no'] = "Phone number is required.";
-    } elseif (!preg_match("/^\+977-?[0-9]{10}$/", $phone_no)) {
-        $errors['phone_no'] = "Invalid phone number format. Use +977-XXXXXXXXXX.";
-    }
-
-    // Validate Address
-    $address = trim($_POST['address']);
-    if (empty($address)) {
-        $errors['address'] = "Address is required.";
-    } elseif (!preg_match("/^[a-zA-Z\s,.'-]+$/", $address)) {
-        $errors['address'] = "Address can only contain letters, spaces, and special characters.";
-    }
-
-    // Validate ID Photo Upload
-    if (isset($_FILES['id_photo']) && $_FILES['id_photo']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['id_photo']['tmp_name'];
-        $fileName = $_FILES['id_photo']['name'];
-        $fileSize = $_FILES['id_photo']['size'];
-        $fileType = $_FILES['id_photo']['type'];
-        $fileNameCmps = explode(".", $fileName);
-        $fileExtension = strtolower(end($fileNameCmps));
-
-        $allowedfileExtensions = ['jpg', 'gif', 'png', 'jpeg'];
-        if (!in_array($fileExtension, $allowedfileExtensions)) {
-            $errors['id_photo'] = "Only JPG, JPEG, PNG, and GIF files are allowed.";
-        }
-    } else {
-        $errors['id_photo'] = "ID photo upload is required.";
-    }
-
-    // If no errors, process the data
-    if (empty($errors)) {
-        // Save the tenant details in the database or perform other necessary actions
-
-        // Redirect or give success message
-        header("Location: success.php"); // Redirect to a success page
-        exit();
-    } else {
-        // Handle the errors (display them back to the user)
-        foreach ($errors as $error) {
-            echo "<p style='color:red;'>{$error}</p>";
+        // Attempt to move the uploaded file
+        if (move_uploaded_file($_FILES['id_photo']['tmp_name'], $path)) {
+            echo "The file " . basename($_FILES['id_photo']['name']) . " has been uploaded.";
+        } else {
+          $errors['id_photo'] = "There was an error uploading the file, please try again!";
         }
     }
 }
 
+// Display other error messages if necessary
+if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo '<div style="color: red;">' . $error . '</div>';
+    }
+}
+
+
+
 
   global $tenant_id, $full_name, $email, $password, $phone_no, $address, $id_type, $id_photo, $errors, $db, $email_verified_at, $verification_code;
-  //    $tenant_id = validate($_POST['tenant_id']);
+    //  $tenant_id = validate($_POST['tenant_id']);
   $full_name = validate($_POST['full_name']);
   $email = validate($_POST['email']);
   $password = validate($_POST['password']);
   $phone_no = validate($_POST['phone_no']);
   $address = validate($_POST['address']);
   $id_type = validate($_POST['id_type']);
-  $id_photo = $path;
+  // $id_photo = $path;
   $hashedPassword = hashPassword($password);
   $location = $_POST['location'];
   // Split the location string to get latitude and longitude
-  echo $location . 'I am location';
+  echo 'The location  from where tenant has registered is:'. $location ;
   //    list($latitude, $longitude) = explode(",", $location);
+
 
 
   $mysql = "SELECT * FROM tenant WHERE email = '$email'";
@@ -220,13 +170,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       echo "Something went wrong";
     }
   } else {
-    echo "Email " . $email . " already Exists.";
+    
+
+    echo "<br> Email " . $email . " is already exists. Please register by new email account";
   }
+  
 }
 
 function tenant_login()
 {
-  global $email, $db;
+  global $db;
   $email = validate($_POST['email']);
   $password = validate($_POST['password']);
 
@@ -248,11 +201,11 @@ function tenant_login()
       echo '<script>window.location.href ="index.php";</script>';
     } else {
       // Incorrect password
-      displayLoginError("Incorrect Password");
+      displayLoginError("Password is incorrect.Please enter a valid matching password to your email");
     }
   } else {
     // Email not found
-    displayLoginError("Incorrect Email or not registered.");
+    displayLoginError("Email is not verified.Please verify your email then proceed to login");
   }
 }
 
@@ -285,7 +238,7 @@ function displayLoginError($message)
     <div class="container">
         <div class="alert">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <strong>$message</strong> Click here to <a href="tenant-register.php" style="color: lightblue;"><b>Register</b></a>.
+            <strong>$message</strong>
         </div>
     </div>
 HTML;
@@ -293,7 +246,7 @@ HTML;
 
 function tenant_update()
 {
-    global $owner_id, $full_name, $email, $password, $phone_no, $address, $id_type, $id_photo, $errors, $db;
+    global $tenant_id, $full_name, $email, $password, $phone_no, $address, $id_type, $id_photo, $errors, $db;
     $tenant_id = validate($_POST['tenant_id']);
     $full_name = validate($_POST['full_name']);
     $email = validate($_POST['email']);

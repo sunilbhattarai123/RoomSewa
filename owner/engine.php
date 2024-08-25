@@ -1,5 +1,5 @@
 <?php
-$db = new mysqli('localhost','root','','simplirentrps');
+$db = new mysqli('localhost','root','','roomsewa');
 
 if($db->connect_error){
 	echo "Error connecting database";

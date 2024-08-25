@@ -3,7 +3,7 @@ session_start();
 if (isset($_SESSION['email'])) {
     $uemail = $_SESSION['email'];
     //echo $uemail;
-    include("./navbar.php");
+    include './navbar.php';
 }
 ?>
 <!DOCTYPE html>
@@ -73,14 +73,14 @@ if (isset($_SESSION['email'])) {
         $result=mysqli_query($db,$sql);
         if($result){
             $row=mysqli_fetch_assoc($result);
-            $sender_name=$row['full_name'];
+            // $sender_name=$row['full_name'];
             // echo $sender_name;
         }
         $sql1= "SELECT full_name from tenant where tenant_id='$receiver_id';";
         $result1=mysqli_query($db,$sql1);
         if($result1){
             $row1=mysqli_fetch_assoc($result1);
-            $receiver_name=$row1['full_name'];
+            // $receiver_name=$row1['full_name'];
             // echo $receiver_name;
         }
        

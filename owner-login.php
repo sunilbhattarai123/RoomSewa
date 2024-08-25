@@ -1,10 +1,11 @@
 <?php
 
-// session_start();
+session_start();
 if (isset($_SESSION["email"])) {
-    header("location:index.php");
+    header("location: ./owner/owner-index.php");
 }
-include("navbar.php");
+include 'navbar.php';
+include 'owner-engine.php'
 
 ?>
 <!DOCTYPE html>
@@ -43,8 +44,24 @@ include("navbar.php");
     
   </form>
 </div>
- <script src="./style/login.js"></script>
-
+ <!-- <script src="./style/login.js"></script> -->
+  <script>
+    
+    // JavaScript to toggle password visibility 
+   function togglePasswordVisibility() {
+       var passwordField = document.getElementById("pwd");
+       var icon = document.querySelector(".toggle-password");
+       if (passwordField.type === "password") {
+           passwordField.type = "text";
+           icon.classList.remove('fa-eye-slash');
+           icon.classList.add('fa-eye');
+       } else {
+           passwordField.type = "password";
+           icon.classList.remove('fa-eye');
+           icon.classList.add('fa-eye-slash');
+       }
+   }
+    </script>
 
 <br><br>
 <?php

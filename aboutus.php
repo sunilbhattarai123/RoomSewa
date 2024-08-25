@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <link rel="stylesheet" href="./style/aboutus.css" class="css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     </style>
@@ -17,24 +16,10 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-light justify-content-between">
-        <div class="container-fluid">
-            <a class="navbar-header" href="index.php">
-                <img src="./images/mainlogo.png" alt="logo">
-            </a>
-
-            <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="aboutus.php">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contactus.php">Contact Us</a>
-                </li>
-
-            </ul>
+<?php 
+session_start();
+include './navbar.php';
+?>
     
     <div class="about-us">
         <div class="container">
@@ -57,13 +42,14 @@
                     </div>
                     <a href="" class="btn">Learn More</a>
                 </div>
-                <img src="images/about.jpg" alt="error">
+                <img src="./images/about.jpg" alt="error">
             </div>
         </div>
     </div>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 
 </body>
 

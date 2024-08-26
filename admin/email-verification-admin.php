@@ -1,6 +1,6 @@
 
-
 <?php
+date_default_timezone_set('Asia/Kathmandu');
  include("../config/config.php");
     if (isset($_POST["verify_email"]))
     {
@@ -11,7 +11,8 @@
          //$con = mysqli_connect("localhost", "root", "", "simplirentrps");
  
         // mark email as verified
-        $sql = "UPDATE admin SET email_verified_at = NOW(),verification_code='' WHERE email = '" . $email . "' AND verification_code = '" . $verification_code . "' AND otp_created_at > NOW() - INTERVAL 2 MINUTE";
+        $sql = "UPDATE admin SET email_verified_at = NOW() WHERE email = '" . $email . "' AND verification_code = '" . $verification_code . "' AND otp_created_at > NOW() - INTERVAL 2 MINUTE";
+
         $result  = mysqli_query($db, $sql);
  
         if (mysqli_affected_rows($db) == 0)

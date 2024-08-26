@@ -174,7 +174,7 @@ require './config/config.php';
                 <option value="0-5000">NRs.0 - NRs.5000</option>
                 <option value="5000-10000">NRs. 5000 - NRs.10000</option>
                 <option value="10000-20000">NRs.10000 - NRs.20000</option>
-                <option value="20000+">NRs.2000+</option>
+                <option value="20000-100000000">NRs.20000+</option>
             </select>
             <button type="submit" name="submit">Search</button>
         </form>

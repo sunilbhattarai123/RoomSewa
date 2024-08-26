@@ -80,26 +80,26 @@ HTML;
 }
 function admin_register()
 {
-    global $admin_id, $full_name, $email, $password,$errors, $db, $email_verified_at, $verification_code,$otp_created_at,$resetOtp;
+    global $admin_id, $full_name, $email, $password, $errors, $db, $verification_code, $email_verified_at,$otp_created_at,$resetOtp;
+    //  $owner_id = validate($_POST['owner_id']);
     $full_name = validate($_POST['full_name']);
     $email = validate($_POST['email']);
     $password = validate($_POST['password']);
-    $hashedPassword = hashPassword($password); // Encrypt password   
+    $hashedPassword = hashPassword($password); // Encrypt password
 
-    $mySql = "SELECT COUNT(email) as count FROM admin WHERE email = '$email'";
-    $res = mysqli_query($db, $mySql);
+    $mysql = "SELECT * FROM admin WHERE email = '$email'";
+    $res = mysqli_query($db, $mysql);
     // Fetch the result as an associative array
-    $row = $res->fetch_assoc();
+    // $row = $res->fetch_assoc();
 
     // Extract the count value
-    $emailCount = $row['count'];
+    $emailCount = mysqli_num_rows($res);
     if ($emailCount == 0) {
 
-
-        //Instantiation and passing true enables exceptions
+        //     //Instantiation and passing true enables exceptions
         $mail = new PHPMailer(true);
         try {
-            // //Enable verbose debug output
+            //        //Enable verbose debug output
             $mail->SMTPDebug = 0; //SMTP::DEBUG_SERVER;
 
             //Send using SMTP
@@ -112,10 +112,10 @@ function admin_register()
             $mail->SMTPAuth = true;
 
             //SMTP username
-            $mail->Username = 'ssxetri7@gmail.com';
+            $mail->Username = 'sunilbhattarai131@gmail.com';
 
             //SMTP password
-            $mail->Password = 'ovyisdasqpiwacua';
+            $mail->Password = 'klxtbsqydwcoouor';
 
             //Enable TLS encryption;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -124,7 +124,7 @@ function admin_register()
             $mail->Port = 587;
 
             //Recipients
-            $mail->setFrom('rameshbhattarai8962gmail.com', 'simplirentrps');
+            $mail->setFrom("sunilbhattarai131@gmail.com");
 
             //Add a recipient
             $mail->addAddress($email, $full_name);
@@ -133,7 +133,7 @@ function admin_register()
             $mail->isHTML(true);
 
             $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-            // $hashedVCode=hashPassword($verification_code);
+
             $mail->Subject = 'Email verification';
             $mail->Body = '<p>Your verification code is: <b style="font-size: 30px;">' . $verification_code . '</b></p>';
 
@@ -141,23 +141,21 @@ function admin_register()
 
             $mail->send();
 
-            // Existing code...
-
-            // Insert into the admin table
-            $sql = "INSERT INTO admin (full_name, email, password, verification_code, email_verified_at, resetOtp) 
-        VALUES ('$full_name', '$email', '$hashedPassword', '$verification_code', NULL, NULL)";
+            // insert in users table
+            $sql = "INSERT INTO admin (full_name, email, password,verification_code, email_verified_at,resetOtp) VALUES ('$full_name', '$email', '$hashedPassword', '$verification_code', NULL,NULL)";
 
             mysqli_query($db, $sql);
 
-            // Send headers after all the processing is done
             header("Location: email-verification-admin.php?email=" . $email);
+            exit();
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo "Something wrong";
         }
     } else {
         echo "Email " . $email . " already Exists.";
     }
 }
+
 
 function validate($data)
 {

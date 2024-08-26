@@ -9,9 +9,9 @@ if (isset($_POST["verify_email"])) {
     $sql = "UPDATE owner SET email_verified_at = NOW() WHERE email = '" . $email . "' AND verification_code = '" . $verification_code . "' AND otp_created_at > NOW() - INTERVAL 2 MINUTE";
     $result = mysqli_query($db, $sql);
 
-    // if (mysqli_affected_rows($conn) == 0) {
-    //     die("Verification code failed.");
-    // }
+    if ($result) {
+        echo("Verification code failed.");
+    }
 
     header("Location: owner-login.php");
     exit();

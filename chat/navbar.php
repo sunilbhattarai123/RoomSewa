@@ -25,13 +25,13 @@ session_start();
 
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link" href="../index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="aboutus.php">About Us</a>
+                    <a class="nav-link" href="../aboutus.php">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contactus.php">Contact Us</a>
+                    <a class="nav-link" href="../contactus.php">Contact Us</a>
                 </li>
                 
             </ul>
@@ -46,10 +46,10 @@ session_start();
                                 class="glyphicon glyphicon-user"></span> My Profile
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="profile.php">Profile</a></li>
-                            <li><a href="preference_collection.php">Preferences</a></li>
-                            <li><a href="booked-property.php">Booked Property</a></li>
-                            <li><a href="logout.php">Logout</a></li>
+                            <li><a href="../profile.php">Profile</a></li>
+                            <li><a href="../preference_collection.php">Preferences</a></li>
+                            <li><a href="../booked-property.php">Booked Property</a></li>
+                            <li><a href="../logout.php">Logout</a></li>
                         </ul>
                     </li>
 

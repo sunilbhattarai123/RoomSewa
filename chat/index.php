@@ -4,6 +4,7 @@ include  './navbar.php';
 if (isset($_SESSION['email'])) {
     $uemail = $_SESSION['email'];
     // echo $uemail;
+    // include './navbar.php';
 }
 ?>
 <!DOCTYPE html>
@@ -62,8 +63,9 @@ if (isset($_SESSION['email'])) {
 <body>
     <?php
     include '../config/config.php';
+
     if(isset($_SESSION['email'])) {
-    global $sender_id,$receiver_id,$sender_name,$receiver_name;
+    global  $tenant_id,$owner_id, $sender_id,$receiver_id,$sender_name,$receiver_name;
         if (isset($_POST['send_message'])) {
             $sender_id = $_POST['sender_id'];
             // echo $sender_id;

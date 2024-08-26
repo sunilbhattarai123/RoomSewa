@@ -1,5 +1,5 @@
 <?php 
-// ob_start(); // Start output buffering
+ob_start(); // Start output buffering
 session_start();
 isset($_SESSION["email"]);
 include("navbar.php");
@@ -98,8 +98,9 @@ if(isset($_POST['send_message1'])){
   if($query)
   {
     header("Location: {$_SERVER['PHP_SELF']}");}
+    exit(); 
 }
-// ob_end_flush();
+ob_end_flush();
 ?>
 
 

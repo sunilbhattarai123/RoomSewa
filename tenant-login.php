@@ -40,6 +40,7 @@ include 'tenant-engine.php';
                 </div>
             </div>
             <div class="form-group">
+                <a href="forgot-password-tenant.php">Forgot your Password ? </a> 
             </div>
             <input type="submit" id="submit" name="tenant_login" class="btn btn-primary btn-block" value="Login">
         </form>

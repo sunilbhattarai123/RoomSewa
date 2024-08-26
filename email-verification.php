@@ -9,12 +9,15 @@ if (isset($_POST["verify_email"])) {
     $sql = "UPDATE tenant SET email_verified_at = NOW() WHERE email = '" . $email . "' AND verification_code = '" . $verification_code . "' AND otp_created_at > NOW() - INTERVAL 2 MINUTE";
     $result = mysqli_query($db, $sql);
 
-    // if (mysqli_affected_rows($conn) == 0) {
-    //     die("Verification code failed.");
-    // }
+    if ($result) {
+       $error= "Verification code failed.";
 
-    header("Location:tenant-login.php");
-    exit();
+        
+    }else{
+
+        header("Location:tenant-login.php");
+    }
+    
 }
 
 ?>
@@ -100,6 +103,7 @@ input::placeholder {
 </style>
 <body>
 
+
     <div class="container">
         <div class="header-box mb-4">
             <h2>Verify Your Email</h2>
@@ -115,13 +119,14 @@ input::placeholder {
                     <input type="text" class="form-control" id="verificationCode" name="verification_code"
                         placeholder="Verification Code" required>
                 </div>
-
+                    <div style="color:red; padding:10px;"><?php echo $error ?? '' ?></div>
                 <div class="form-group text-center">
                     <button class="verify" type="submit" class="btn btn-block" name="verify_email">Verify</button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <!-- Bootstrap JS and Popper.js scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

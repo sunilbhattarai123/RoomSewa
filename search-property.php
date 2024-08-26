@@ -1,121 +1,153 @@
-<?php 
-session_start();
-isset($_SESSION["email"]);
-include("navbar.php");
-
-
- ?>
-
- <?php 
-include("config/config.php");
- ?>
+<?php
+  session_start();
+  include("navbar.php");
+  include("config/config.php");
+?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: lightgray;
+    }
 
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 100%;
-  min-width: 100%;
-  margin: auto;
-  text-align: center;
-  font-family: arial;
-  display: inline;
-}
 
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  opacity: 0.8;
-}
+    .col-sm-2 {
+      width: 25%;
 
-.container {
-  padding: 2px 16px;
-}
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      /* margin: 30px; */
+      padding: 20px;
+      background-color: whitesmoke;
+    }
 
-.btn {
-  width: 100%;
-}
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 300px;
+      margin: 35px;
+      text-align: center;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      border-radius: 20px;
+      border-width: 10px;
+      border-color: green;
+    }
 
-.image {
-  min-width: 100%;
-  min-height: 200px;
-  max-width: 100%;
-  max-height:200px;
-}
-</style>
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
+    .container {
+      padding: 2px 16px;
+    }
+
+    .btn {
+
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: chocolate;
+      color: blueviolet;
+    }
+
+    .image {
+      min-width: 100%;
+      min-height: 200px;
+      max-width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+    }
+  </style>
 </head>
+
 <body>
-<?php 
-global $db;
+<?php
 
 if (isset($_POST['submit'])) {
-    $location = $_POST['search_property']; // Location entered by the user
-    $property_type = $_POST['property_type']; // Property type selected by the user
-    $price_range = $_POST['price_range']; // Price range selected by the user
+    $search_property = mysqli_real_escape_string($db, $_POST['search_property']);
+    $property_type = mysqli_real_escape_string($db, $_POST['property_type']);
+    $price_range = mysqli_real_escape_string($db, $_POST['price_range']);
 
-    // Initial SQL query
-    $sql = "SELECT * FROM add_property WHERE (zone LIKE '%$location%' 
-            OR district LIKE '%$location%' 
-            OR province LIKE '%$location%' 
-            OR city LIKE '%$location%' 
-            OR tole LIKE '%$location%' 
-            OR country LIKE '%$location%')";
+    // Base SQL query
+    $sql = "SELECT * FROM add_property WHERE ";
+    $conditions = array();
 
-    // Filter by property type if selected
+    // Add conditions based on search input
+    if (!empty($search_property)) {
+        $conditions[] = "CONCAT(zone, district, province, city, tole, property_type, country) LIKE '%$search_property%'";
+    }
+
     if (!empty($property_type)) {
-        $sql .= " AND property_type = '$property_type'";
+        $conditions[] = "property_type = '$property_type'";
     }
 
-    // Filter by price range if selected
     if (!empty($price_range)) {
-        if ($price_range == '0-5000') {
-            $sql .= " AND estimated_price BETWEEN 0 AND 5000";
-        } elseif ($price_range == '5000-10000') {
-            $sql .= " AND estimated_price BETWEEN 5000 AND 10000";
-        } elseif ($price_range == '10000-20000') {
-            $sql .= " AND estimated_price BETWEEN 10000 AND 20000";
-        } elseif ($price_range == '20000+') {
-            $sql .= " AND estimated_price > 20000";
-        }
+        // Parse the price range into minimum and maximum values
+        
+        $price_parts = explode('-', $price_range);
+        $min_price = (int)trim($price_parts[0]);
+        $max_price = (int)trim($price_parts[1]);
+        $conditions[] = "estimated_price BETWEEN $min_price AND $max_price";
     }
 
+    // Append conditions to the SQL query
+    if (!empty($conditions)) {
+        $sql .= " AND " . implode(' AND ', $conditions);
+    }  $sql = "SELECT * FROM add_property WHERE concat(zone, district, province, city, tole, property_type, country) LIKE '%$search_property%'";
+  }
 
+
+    // Add sorting and limit to the query
+    $sql .= " ORDER BY RAND() LIMIT 12";
+
+    // Execute the query
     $query = mysqli_query($db, $sql);
 
-    echo '<center><h1>Searched Properties</h1></center>';
+    echo '<center><h1>Search Results</h1></center>';
     if (mysqli_num_rows($query) > 0) {
+        echo '<div class="row">';
         while ($rows = mysqli_fetch_assoc($query)) {
             $property_id = $rows['property_id'];
-?>
 
-<div class="col-sm-2">
-<div class="card">
-<?php
-            $sql2 = "SELECT * FROM property_photo WHERE property_id='$property_id'";
+            echo '<div class="col-sm-2">';
+            echo '<div class="card">';
+            // Fetch and display property photo
+            $sql2 = "SELECT * FROM property_photo WHERE property_id='$property_id' LIMIT 1";
             $query2 = mysqli_query($db, $sql2);
-
             if (mysqli_num_rows($query2) > 0) {
-                $row = mysqli_fetch_assoc($query2); 
+                $row = mysqli_fetch_assoc($query2);
                 $photo = $row['p_photo'];
-                echo '<img class="image" src="owner/'.$photo.'">';
+                echo '<img class="image" src="owner/' . $photo . '">';
             }
-?>
-  <h4><b><?php echo $rows['property_type']; ?></b></h4> 
-  <p><?php echo $rows['city'].', '.$rows['district'] ?></p> 
-  <p><?php echo '<a href="view-property-login.php?property_id='.$rows['property_id'].'" class="btn btn-lg btn-primary btn-block">View Property</a><br>'; ?></p><br>
-</div>
-</div>
-
-<?php 
+            // Display property details
+            echo '<h4><b>' . $rows['property_type'] . '</b></h4>';
+            echo '<p>' . $rows['city'] . ', ' . $rows['district'] . '</p>';
+            echo '<p><a href="view-property-login.php?property_id=' . $rows['property_id'] . '" class="btn btn-lg btn-primary btn-block">View Property</a></p>';
+            echo '</div>';
+            echo '</div>';
         }
+        echo '</div>';
     } else {
-        echo "<center><h3>Searched Property not found...</h3></center>";
+        echo "<center><h3>No properties found matching the search criteria...</h3></center>";
     }
-}
-?>
 
-</body>
-</html>
+?>

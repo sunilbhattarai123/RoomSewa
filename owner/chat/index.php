@@ -62,6 +62,7 @@ if (isset($_SESSION['email'])) {
 <body>
     <?php
     include ("../../config/config.php");
+
     global $tenant_id,$owner_id,$sender_name,$receiver_name,$sender_id,$receiver_id;
         if (isset($_POST['send_message'])) {
             $sender_id = $_POST['sender_id'];

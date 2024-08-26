@@ -1,10 +1,10 @@
 <?php
-include("../config/config.php");
 // Function to retrieve chat history
 function getChatHistory($userId1, $userId2) {
-    global $db;
-    
+    include("../config/config.php");
+
     $sql = "SELECT sender_id, message_content, time FROM messages WHERE (sender_id = '$userId1' AND receiver_id = '$userId2') OR (sender_id = '$userId2' AND receiver_id = '$userId1') ORDER BY time ASC"; 
+
     $result = mysqli_query($db, $sql);
     
     if (mysqli_num_rows($result) > 0) {
@@ -43,4 +43,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ));
     }
 }
-?>
+

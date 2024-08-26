@@ -2,6 +2,7 @@
 include("navbar.php");
 ?>
 <head>
+  <link rel="stylesheet" href="../style/register.css" class="css">
 <style>
       .password-container {
             position: relative;
@@ -142,3 +143,4 @@ function Validate() {
   return true;
 }
 </script>
+<script src="../style/register.js"></script>

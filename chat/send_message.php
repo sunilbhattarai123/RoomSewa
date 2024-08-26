@@ -1,5 +1,5 @@
 <?php
-include("../config/config.php");
+
 
 function sendMessage($senderId, $receiverId, $messageContent) {
     include("../config/config.php");

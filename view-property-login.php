@@ -79,11 +79,13 @@ session_start();
       $query2 = mysqli_query($db, $sql2);
 
       $rowcount = mysqli_num_rows($query2);
+    
       ?>
 
 
 
       <div class="container-fluid">
+      
         <div class="row">
           <div class="col-sm-6">
 
@@ -94,6 +96,7 @@ session_start();
                 for ($i = 1; $i <= $rowcount; $i++) {
                   $row = mysqli_fetch_array($query2);
                   $photo = $row['p_photo'];
+                
                   ?>
 
                   <?php
@@ -340,10 +343,11 @@ session_start();
           }
 
           ?>
-          <form method="POST" action="">
+          <form method="POST">
             <div class="row">
               <div class="col-sm-6">
                 <?php
+              
                 $booked = $rows['booked'];
 
                 if ($booked == 'No') { ?>
@@ -358,7 +362,7 @@ session_start();
           </form>
 
 
-          <form method="POST" action="./chat/index.php">
+          <form method="POST" action="../roomsewa/chat/index.php">
             <div class="col-sm-6">
 
               <input type="hidden" name="sender_id" value="<?php echo $tenant_id; ?>">

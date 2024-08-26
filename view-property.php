@@ -61,7 +61,7 @@ session_start();
   include('config/config.php');
   include('navbar.php');
   include('review-engine.php');
-  // include('booking-engine.php');
+  include('booking-engine.php');
   
   ?>
 
@@ -351,10 +351,17 @@ session_start();
         <?php
 
         if (isset($_SESSION["email"]) && !empty($_SESSION['email'])) {
-
+          $u_email = $_SESSION['email'];
+          $sql01 = "SELECT tenant_id from tenant where email='$u_email';";
+          $result01 = mysqli_query($db, $sql01);
+          if ($result01) {
+            $row01 = mysqli_fetch_assoc($result01);
+            $tenant_id = $row01['tenant_id'];
+            echo ($tenant_id);
+          }
 
           ?>
-          <form method="POST" action="./payment/index.php">
+          <form method="POST" action="">
             <div class="row">
               <div class="col-sm-6">
                 <?php

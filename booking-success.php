@@ -87,7 +87,7 @@ if (isset($_SESSION['email'])&&$_SESSION['flag']) {
             });
         </script>
 <?php
-        //echo '<script>window.location.href = "./view-property.php?property_id=$property_id";</script>';
+        echo '<script>window.location.href = "./view-property.php?property_id=$property_id";</script>';
     }
 
 } else {

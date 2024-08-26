@@ -48,6 +48,7 @@ include("config/config.php");
 </style>
 </head>
 <body>
+
 <?php 
 $u_email=$_SESSION['email'];
         $sql3="SELECT * from tenant where email='$u_email'";
@@ -81,7 +82,7 @@ $sql="SELECT * FROM add_property where property_id='$prop_id'";
 <?php
 
 
-        $sql2="SELECT * FROM property_photo where property_id='$property_id'";
+    $sql2="SELECT * FROM property_photo where property_id='$property_id'";
     $query2=mysqli_query($db,$sql2);
 
     if(mysqli_num_rows($query2)>0)
@@ -92,7 +93,7 @@ $sql="SELECT * FROM add_property where property_id='$prop_id'";
 
   <h4><b><?php echo $rows['property_type']; ?></b></h4> 
   <p><?php echo $rows['city'].', '.$rows['district'] ?></p> 
-  <p><?php echo '<a href="view-property.php?property_id='.$rows['property_id'].'"  class="btn btn-lg btn-primary btn-block" >View Property </a><br>'; ?></p><br>
+  <p><?php echo '<a href="view-property-login.php?property_id='.$rows['property_id'].'"  class="btn btn-lg btn-primary btn-block" >View Property </a><br>'; ?></p><br>
 </div>
 </div>
 
@@ -106,7 +107,7 @@ $sql="SELECT * FROM add_property where property_id='$prop_id'";
     }
 
     else{
-    	echo "<center><h3>Searched Property not found...</h3></center>";
+    	// echo "<center><h3>Searched Property not found...</h3></center>";
     }
   }}}}
     ?>

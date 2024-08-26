@@ -19,6 +19,15 @@ if (isset($_POST['book_property'])) {
     $u_email = $_SESSION["email"];
     $property_id = $_GET['property_id'];
 
+   
+$sql_property = "SELECT owner_id FROM add_property WHERE property_id='$property_id'";
+$query_property = mysqli_query($db, $sql_property);
+$property_data = mysqli_fetch_assoc($query_property);
+$owner_id = $property_data['owner_id'];
+
+echo "Owner ID: " . $owner_id;
+
+
     $sql = "SELECT * FROM tenant where email='$u_email'";
     $query = mysqli_query($db, $sql);
 
@@ -28,7 +37,7 @@ if (isset($_POST['book_property'])) {
         $sql1 = "UPDATE add_property SET booked='Yes' WHERE property_id='$property_id'";
         $query1 = mysqli_query($db, $sql1);
 
-        $sql2 = "INSERT INTO booking(property_id,tenant_id) VALUES ('$property_id','$tenant_id')";
+        $sql2 = "INSERT INTO booking(property_id,tenant_id,owner_id) VALUES ('$property_id','$tenant_id','$owner_id')";
         $query2 = mysqli_query($db, $sql2);
 
         if ($query2) {
@@ -97,7 +106,7 @@ if (isset($_POST['book_property'])) {
           <style>
             .alert {
               padding: 20px;
-              background-color: #DC143C;
+              background-color: #5cb85c;
               color: white;
             }
 

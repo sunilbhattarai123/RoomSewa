@@ -56,7 +56,7 @@ session_start();
   include('navbar.php');
   include('review-engine.php');
 
-  //include('booking-engine.php');
+  include('booking-engine.php');
   
   ?>
 

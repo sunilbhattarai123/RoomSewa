@@ -1,9 +1,9 @@
 <?php
 session_start();
-var_dump($_SESSION['flag']);
 var_dump($_SESSION['email']);
 if (isset($_SESSION['email'])&&$_SESSION['flag']) {
     $u_email = $_SESSION['email'];
+
     //echo $u_email;
     //echo $_SESSION['flag'];
     include("config/config.php");

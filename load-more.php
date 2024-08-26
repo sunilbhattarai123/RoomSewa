@@ -1,6 +1,6 @@
 <?php
 
-// session_start();
+session_start();
 include("navbar.php");
 ?>
 <!DOCTYPE html>
@@ -12,15 +12,7 @@ include("navbar.php");
     h1 {
       text-align: center;
       color: #333;
-      margin-top: 20px;
-    }
-
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 20px;
-      border-radius: 100px;
+      margin-top: 10px;
     }
 
     body {
@@ -34,32 +26,61 @@ include("navbar.php");
 
 
     .col-sm-2 {
-      width: 25%;
+      width: 33.33%;
 
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       /* margin: 30px; */
-      padding: 20px;
+      padding: 0px;
+      background-color: whitesmoke;
+    }
+
+   
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 0px;
+      border-radius: 100px;
       background-color: whitesmoke;
     }
 
     .card {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-      width: 400px;
-      height: 350px;
+      width: 300px;
       margin: 35px;
       text-align: center;
+      overflow: hidden;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
-      border-radius: 20px;
-      border-width: 10px;
-      border-color: green;
+      border-radius: 10px;
+      border: 2px solid green;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
     }
 
     .card:hover {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-      opacity: 0.8;
+      opacity: 0.9;
       transform: scale(1.1);
+    }
+
+    .image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 2px solid green;
+    }
+
+    .property-info {
+      padding: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .btn {
@@ -69,7 +90,7 @@ include("navbar.php");
       background-color: green;
       color: white;
       text-decoration: none;
-      border-radius: 20px;
+      border-radius: 0 0 10px 10px;
       transition: background-color 0.3s ease;
     }
 
@@ -78,18 +99,13 @@ include("navbar.php");
       color: blueviolet;
     }
 
-    .image {
-      min-width: 100%;
-      min-height: 200px;
-      max-width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-    }.label {
-      display: inline;
-      padding: 15px;
-      border-radius: 5px;
+    .label {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 15px;
       font-weight: bold;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+      margin-bottom: -16px;
     }
 
     .available {
@@ -100,6 +116,44 @@ include("navbar.php");
     .booked {
       background-color: red;
       color: white;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .card {
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      .image {
+        height: 150px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .card {
+        margin: 15px 0;
+        border-width: 5px;
+      }
+
+      .image {
+        height: 120px;
+      }
+
+      .label {
+        font-size: 1.2rem;
+        padding: 10px;
+      }
+
+      .btn {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -112,7 +166,7 @@ include("navbar.php");
     <?php
     include("config/config.php");
 
-    $sql = "SELECT * FROM add_property ORDER BY RAND() LIMIT 8";
+    $sql = "SELECT * FROM add_property ORDER BY RAND() LIMIT 9";
     $query = mysqli_query($db, $sql);
 
     if (mysqli_num_rows($query) > 0) {

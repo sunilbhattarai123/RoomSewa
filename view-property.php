@@ -376,9 +376,10 @@ session_start();
                 <?php } ?>
               </div>
           </form>
-          <form method="POST" action="chatpage.php">
+          <form method="POST" action="../roomsewa/chat/index.php">
             <div class="col-sm-6">
-              <input type="hidden" name="owner_id" value="<?php echo $rows['owner_id']; ?>">
+            <input type="hidden" name="sender_id" value="<?php echo $tenant_id; ?>">
+              <input type="hidden" name="receiver_id" value="<?php echo $rows['owner_id']; ?>">
               <input type="submit" class="btn btn-lg btn-success" name="send_message" style="width: 100%"
                 value="Send Message">
 

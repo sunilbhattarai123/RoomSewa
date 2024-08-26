@@ -8,14 +8,16 @@ if (isset($_POST["verify_email"])) {
     // mark email as verified
     $sql = "UPDATE owner SET email_verified_at = NOW() WHERE email = '" . $email . "' AND verification_code = '" . $verification_code . "' AND otp_created_at > NOW() - INTERVAL 2 MINUTE";
     $result = mysqli_query($db, $sql);
-
-    if ($result) {
-        echo("Verification code failed.");
+    if (!$result) {
+        $error= "Verification code failed.";
+ 
+         
+     }else{
+ 
+         header("Location:tenant-login.php");
+     
+     }
     }
-
-    header("Location: owner-login.php");
-    exit();
-}
 
 ?>
 
@@ -116,7 +118,7 @@ if (isset($_POST["verify_email"])) {
                     <input type="text" class="form-control" id="verificationCode" name="verification_code"
                         placeholder="Verification Code" required>
                 </div>
-
+z
                 <div class="form-group text-center">
                     <button class="verify" type="submit" class="btn btn-block" name="verify_email">Verify</button>
                 </div>

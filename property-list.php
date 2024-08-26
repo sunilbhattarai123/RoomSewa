@@ -74,8 +74,8 @@ include("config/config.php");
       padding: 5px 10px;
       border-radius: 15px;
       font-weight: bold;
-      font-size: 1rem;
-      margin-bottom: 10px;
+      font-size: 1.4rem;
+      margin-bottom: 5px;
     }
 
     .available {
